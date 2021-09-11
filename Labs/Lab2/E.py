@@ -12,4 +12,4 @@ with open('input.txt') as txt:
 if len(ans) == 0: ans.append("EMPTY")
 
 with open('output.txt', 'w') as txt:
-    txt.write(' '.join([str(ans[i]) for i in range(len(ans))]))
+    txt.write(' '.join([str(i) for i in sorted(ans)]))
