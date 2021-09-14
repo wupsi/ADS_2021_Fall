@@ -1,56 +1,48 @@
 #include <iostream>
 using namespace std;
-#define null 1e9
 
-int start = 0, endd = 0;
-long long n;
-int q[100000];
+struct queue{
+    int q[100000];
+    int start, endd;
 
-bool error(){
-    return endd - start <= 0;
-}
-
-void push(){
-    cin >> n;
-    q[endd] = n;
-    endd++;
-    cout << "ok\n";
-}
-
-void pop(){
-    if(error()) cout << "error\n";
-    else{
-        cout << q[start] << endl;
-        start++;
+    queue(){
+        start = 0;
+        endd = 0;
     }
-}
 
-void front(){
-    if(error()) cout << "error\n";
-    else cout << q[start] << endl;
-}
+    bool error(){
+        return endd - start <= 0;
+    }
 
-void size(){
-    cout << endd - start << endl;
-}
+    void push(int n){
+        q[endd] = n;
+        endd++;
+    }
 
-void clear(){
-    for(int i = start; i <= endd; i++)
-        q[i] = null;
+    int pop(){
+        start++;
+        return q[start - 1];
+    }
 
-    start = 0;
-    endd = 0;
+    int front(){
+        return q[start];
+    }
 
-    cout << "ok\n"; 
-}
+    int size(){
+        return endd - start;
+    }
 
-void arr(){
-    for(int i = start; i <= endd; i++) cout << q[i] << " ";
-}
+    void clear(){
+        start = 0;
+        endd = 0;
+    }
+};
 
 int main(){
     
     string s;
+    queue q;
+    int n;
     
     while(true){
 
@@ -61,17 +53,29 @@ int main(){
             return 0;
             }
         
-        if(s == "push") push();
+        if(s == "push"){
+            cin >> n;
+            q.push(n);
+            cout << "ok\n";
+        }
         
-        if(s == "size") size();
+        if(s == "size") 
+            cout << q.size() << endl;
         
-        if(s == "pop") pop();
-        
-        if(s == "front") front();
-        
-        if(s == "clear") clear();
+        if(s == "pop"){
+            if(q.error()) cout << "error\n";
+            else cout << q.pop() << endl;
+        }
 
-        if(s == "arr") arr();
+        if(s == "front"){
+            if(q.error()) cout << "error\n";
+            else cout << q.front() << endl;
+        }
+        
+        if(s == "clear"){
+            q.clear();
+            cout << "ok\n"; 
+        }
 
-    }   
+    }
 }

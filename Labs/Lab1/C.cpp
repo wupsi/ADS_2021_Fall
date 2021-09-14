@@ -1,104 +1,111 @@
 #include <iostream>
 using namespace std;
-#define null 1e9
 
-int start = 50000, endd = 50000;
-long long n;
-int q[100000];
+struct deque{
+    int q[100000];
+    int start, endd;
 
-bool error(){
-    return endd - start <= 0;
-}
+    deque(){
+        start = 50000;
+        endd = 50000;
+    }
+    
+    bool error(){
+        return endd - start <= 0;
+    }
 
-void push_front(){
-    cin >> n;
-    q[start] = n;
-    start--;
-    cout << "ok\n";
-}
+    void push_front(int n){
+        q[start] = n;
+        start--;
+    }
 
-void push_back(){
-    cin >> n;
-    q[endd + 1] = n;
-    endd++;
-    cout << "ok\n";
-}
+    void push_back(int n){
+        q[endd + 1] = n;
+        endd++;
+    }
 
-void pop_front(){
-    if(error()) cout << "error\n";
-    else{
-        cout << q[start + 1] << endl;
+    int pop_front(){
         start++;
+        return q[start];
     }
-}
 
-void pop_back(){
-    if(error()) cout << "error\n";
-    else{
-        cout << q[endd] << endl;
+    int pop_back(){
         endd--;
+        return q[endd + 1];
     }
-}
 
-void front(){
-    if(error()) cout << "error\n";
-    else cout << q[start + 1] << endl;
-}
+    int front(){
+        return q[start + 1];
+    }
 
-void back(){
-    if(error()) cout << "error\n";
-    else cout << q[endd] << endl;
-}
+    int back(){
+        return q[endd];
+    }
 
-void size(){
-    cout << endd - start << endl;
-}
+    int size(){
+        return endd - start;
+    }
 
-void clear(){
-    for(int i = start + 1; i <= endd; i++)
-        q[i] = null;
-    
-    start = 50000;
-    endd = 50000;
-
-    cout << "ok\n";
-}
-
-void arr(){
-    for(int i = start + 1; i <= endd; i++)
-        cout << q[i] << " ";
-    
-}
+    void clear(){
+        start = 50000;
+        endd = 50000;
+    }
+};
 
 int main(){
     
     string s;
+    deque dq;
+    int n;
     
     while(true){
 
         cin >> s;
         
-        if(s == "push_front") push_front();
-        
-        if(s == "push_back") push_back();
+        if(s == "push_front"){
+            cin >> n;
+            dq.push_front(n);
+            cout << "ok\n";
+        }
 
-        if(s == "pop_front") pop_front();
+        if(s == "push_back"){
+            cin >> n;
+            dq.push_back(n);
+            cout << "ok\n";
+        }
 
-        if(s == "pop_back") pop_back();
+        if(s == "pop_front"){
+            if(dq.error()) cout << "error\n";
+            else cout << dq.pop_front() << endl;
+        }
 
-        if(s == "front") front();
+        if(s == "pop_back"){
+            if(dq.error()) cout << "error\n";
+            else cout << dq.pop_back() << endl;
+        }
 
-        if(s == "back") back();
+        if(s == "front"){
+            if(dq.error()) cout << "error\n";
+            else cout << dq.front() << endl;
+        }
 
-        if(s == "size") size();
+        if(s == "back"){
+            if(dq.error()) cout << "error\n";
+            else cout << dq.back() << endl;
+        }
 
-        if(s == "clear") clear();
+        if(s == "size"){
+            cout << dq.size() << endl;
+        }
 
-        if(s == "exit") {
+        if(s == "clear"){
+            dq.clear();
+            cout << "ok\n";
+        }
+
+        if(s == "exit"){
             cout << "bye";
             return 0;
-            }
-
-        if(s == "arr") arr();
+        }
     }   
 }

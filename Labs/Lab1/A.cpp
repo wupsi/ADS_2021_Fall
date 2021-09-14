@@ -1,71 +1,76 @@
 #include <iostream>
 using namespace std;
-#define null 1e9
 
-int cnt = 0;
-long long n;
-int st[100000];
-
-bool error(){
-    return cnt - 1 < 0;
-}
-
-void push(){
-    cin >> n;
-    st[cnt] = n;
-    cnt++;
-    cout << "ok\n";
-}
-
-void pop(){
-    if(error()) cout << "error\n";
-    else{
-        cout << st[cnt - 1] << endl;
-        st[cnt - 1] = null;
-        cnt--;
+struct stack{
+    int arr[100000];
+    int pos;
+    stack(){
+        pos = 0;
     }
-}
 
-void back(){
-    if(error()) cout << "error\n";
-    else cout << st[cnt - 1] << endl;
-}
+    bool error(){
+        return pos - 1 < 0;
+    }
 
-void size(){
-    cout << cnt << endl;
-}
+    void push(int n){
+        arr[pos] = n;
+        pos++;
+    }
 
-void clear(){
-    for(int i = 0; i < cnt; i++)
-        st[i] = null;
-    
-    cnt = 0;
-    
-    cout << "ok\n"; 
-}
+    int pop(){
+        pos--;
+        return arr[pos];
+    }
+
+    int top(){
+        return arr[pos - 1];
+    }
+
+    int size(){
+        return pos;
+    }
+
+    void clear(){
+        pos = 0;
+    }
+};
 
 int main(){
-    
-    string s;
-    
+
+    stack st;
+
     while(true){
+        string act; cin >> act;
 
-        cin >> s;
+        if(act == "push"){
+            int n; cin >> n;
+            st.push(n);
+            cout << "ok\n";
+        }
 
-        if(s == "exit") {
+        if(act == "pop"){
+            if(st.error()) cout << "error\n";
+            else cout << st.pop() << endl;
+        }
+
+        if(act == "back"){
+            if(st.error()) cout << "error\n";
+            else cout << st.top() << endl;
+        }
+
+        if(act == "size")
+            cout << st.size() << endl;
+        
+        if(act == "clear"){
+            st.clear();
+            cout << "ok\n";
+        }
+
+        if(act == "exit"){
             cout << "bye";
-            return 0;
-            }
-        
-        if(s == "push") push();
-        
-        if(s == "size") size();
-        
-        if(s == "pop") pop();
-        
-        if(s == "back") back();
-        
-        if(s == "clear") clear();
+            break;
+        }
+    }
 
-    }   
+    return 0;
 }
